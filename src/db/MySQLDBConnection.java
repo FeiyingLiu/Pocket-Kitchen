@@ -258,16 +258,50 @@ public class MySQLDBConnection implements DBConnection {
 		}
 		return null;
 	}
-              
+	
 	@Override
 	public Boolean verifyLogin(String userId, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			if (conn == null) {
+				return false;
+			}
+//			String sql = "SELECT user_id from users WHERE user_id='" + userId
+//					+ "' and password='" + password + "'";
+//			System.out.println(sql);
+//			Statement stmt = conn.createStatement();
+//			ResultSet rs = stmt.executeQuery(sql);
+
+			String sql = "SELECT user_id from users WHERE user_id = ? and password = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			statement.setString(2, password);
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 
 	@Override
 	public String getFirstLastName(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		String name = "";
+		try {
+			if (conn != null) {
+				String sql = "SELECT first_name, last_name from users WHERE user_id = ?";
+				PreparedStatement statement = conn.prepareStatement(sql);
+				statement.setString(1, userId);
+				ResultSet rs = statement.executeQuery();
+				if (rs.next()) {
+					name += rs.getString("first_name") + " "
+							+ rs.getString("last_name");
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return name;
 	}
 }
