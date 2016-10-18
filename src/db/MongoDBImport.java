@@ -15,8 +15,8 @@ public class MongoDBImport {
    	 // if user didn't exist, will create a new one automatically
    	 db.getCollection("users").insertOne( 
    			 new Document()
-   					 .append("first_name", "John")
-   					 .append("last_name", "Smith")
+   					 .append("first_name", "Feiying")
+   					 .append("last_name", "Liu")
    					 .append("password", "3229c1097c00d497a0fd282d586be050")
    					 .append("user_id", "1111"));
    	 mongoClient.close();

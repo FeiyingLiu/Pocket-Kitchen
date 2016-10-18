@@ -23,23 +23,25 @@ import db.MySQLDBConnection;
 @WebServlet("/restaurants")
 public class SearchRestaurants extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static DBConnection connection = new MySQLDBConnection();   
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SearchRestaurants() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		JSONArray array = new JSONArray();
-		DBConnection connection = new MySQLDBConnection();
-//		DBConnection connection = new MongoDBConnection();
+	protected void doGet(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException {
+	// allow access only if session exists
+		if (!RpcParser.sessionValid(request)) {
+			response.setStatus(403);
+			return;
+		}
+		JSONArray array = null;
 		if (request.getParameterMap().containsKey("user_id")
 				&& request.getParameterMap().containsKey("lat")
 				&& request.getParameterMap().containsKey("lon")) {
@@ -56,7 +58,7 @@ public class SearchRestaurants extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+//		doGet(request, response);
 	}
 
 }

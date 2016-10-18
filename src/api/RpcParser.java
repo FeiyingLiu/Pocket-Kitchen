@@ -57,4 +57,15 @@ public class RpcParser {
 			e.printStackTrace();
 		}	
 	}
+	
+	public static Boolean sessionValid(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("user") == null) return false;
+		String user = (String) session.getAttribute("user");
+		String user_in_url = request.getParameter("user_id");
+		if (user_in_url!=null && !user_in_url.equals(user)){
+			return false;
+		}
+		return true;
+	}
 }

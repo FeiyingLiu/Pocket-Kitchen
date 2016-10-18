@@ -37,6 +37,10 @@ public class RecommendRestaurants extends HttpServlet {
 //    DBConnection connection = new MongoDBConnection();
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+    	if (!RpcParser.sessionValid(request)) {
+			response.setStatus(403);
+			return;
+		}
 		JSONArray array = null;
 		if (request.getParameterMap().containsKey("user_id")) {
 			String userId = request.getParameter("user_id");
@@ -50,7 +54,7 @@ public class RecommendRestaurants extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+//		doGet(request, response);
 	}
 
 }
